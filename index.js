@@ -1,16 +1,16 @@
 const express = require('express')
-const app = express()
 require('dotenv').config()
 const cors = require('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const app = express()
 const port = process.env.PORT || 5000
 
 // middleware
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', "https://assignment-12-server-side-xi.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
 }
@@ -38,7 +38,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const database = client.db("tourDB");
     const packageCollection = database.collection("package");
     const usersCollection = database.collection("users");
@@ -104,6 +104,8 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result)
     })
+
+   
     
     // tourguide get
     app.get("/tourGuide", async (req, res)=> {
@@ -144,3 +146,5 @@ app.get("/", (req, res)=> {
 app.listen(port, ()=> {
   console.log(`explore in banglade  on port ${port}`);
 })
+
+
