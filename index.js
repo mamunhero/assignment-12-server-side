@@ -105,7 +105,13 @@ async function run() {
       res.send(result)
     })
 
-   
+  //  one packages collection
+  app.get("/packages/:id", async (req, res)=> {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await packageCollection.findOne(query);
+      res.send(result);
+  })
     
     // tourguide get
     app.get("/tourGuide", async (req, res)=> {
